@@ -4,14 +4,7 @@
 
     Voice message helper for osTicket.
 
-    Peter Rotich <peter@osticket.com>
-    Copyright (c)  2006-2013 osTicket
-    http://www.osticket.com
-
-    Released under the GNU General Public License WITHOUT ANY WARRANTY.
-    See LICENSE.TXT for details.
-
-    vim: expandtab sw=4 ts=4 sts=4:
+  
  **********************************************************************/
 
 require_once INCLUDE_DIR . 'class.file.php';
@@ -70,11 +63,11 @@ class VoiceMessage {
             . '</div>'
             . '<audio controls preload="metadata" %s style="width:100%%;max-width:400px;">'
             . '<source src="%s" type="%s">'
-            . __('Your browser does not support audio playback.')
+            . 'Your browser does not support audio playback.'
             . '</audio>'
             . '<div class="voice-message-actions">'
             . '<a class="no-pjax" href="%s" download="%s">'
-            . '<i class="icon-download-alt"></i> ' . __('Download') . '</a>'
+            . '<i class="icon-download-alt"></i> ' . 'Download' . '</a>'
             . '</div>'
             . '</div>',
             $id,
