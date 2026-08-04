@@ -1252,7 +1252,6 @@ implements TemplateVariable {
             // This should be a noop since the ORM caches on PK
             $F = @$file['file'] ?: AttachmentFile::lookup($file['id']);
             // XXX: This is not Unicode safe
-            // TODO: fix name lookup
             if ($F && strcasecmp($F->name, $filename) !== 0)
                 $att->name = $filename;
         }
@@ -1288,7 +1287,6 @@ implements TemplateVariable {
     }
 
     function getAttachmentsLinks($file='attachment.php', $target='_blank', $separator=' ') {
-        // TODO: Move this to the respective UI templates
 
         $str='';
         foreach ($this->attachments as $att ) {
