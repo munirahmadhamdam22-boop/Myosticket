@@ -1286,24 +1286,6 @@ implements TemplateVariable {
         return $json;
     }
 
-    function getAttachmentsLinks($file='attachment.php', $target='_blank', $separator=' ') {
-
-        $str='';
-        foreach ($this->attachments as $att ) {
-            if ($att->inline) continue;
-            $size = '';
-            if ($att->file->size)
-                $size=sprintf('<em>(%s)</em>', Format::file_size($att->file->size));
-
-            $str .= sprintf(
-                '<a class="Icon file no-pjax" href="%s" target="%s">%s</a>%s&nbsp;%s',
-                $att->file->getDownloadUrl(), $target,
-                Format::htmlchars($att->file->name), $size, $separator);
-        }
-
-        return $str;
-    }
-
     /* save email info
      * TODO: Refactor it to include outgoing emails on responses.
      */

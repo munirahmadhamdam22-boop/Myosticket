@@ -48,7 +48,7 @@ if(is_object($thisstaff) && $thisstaff->isStaff()) { ?>
 <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/jquery-ui-sliderAccess.js?a1114e5"></script>
 <script type="text/javascript" src="<?php echo ROOT_PATH; ?>scp/js/scp.js?a1114e5"></script>
     <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/filedrop.field.js?a1114e5"></script>
-    <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/voice.message.js?a1114e6"></script>
+    <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/voice.message.js?a1114e7"></script>
 <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/select2.min.js?a1114e5"></script>
 <script type="text/javascript" src="<?php echo ROOT_PATH; ?>scp/js/tips.js?a1114e5"></script>
 <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/redactor.min.js?a1114e5"></script>

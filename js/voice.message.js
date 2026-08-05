@@ -52,6 +52,7 @@
         + '<button type="button" class="voice-recorder-btn" title="' + this.options.labelRecord + '" aria-label="' + this.options.labelRecord + '">'
         + '<i class="icon-microphone"></i><span class="voice-recorder-label"> ' + this.options.labelRecord + '</span></button>'
         + '</div>'
+        + '<div class="voice-recorder-panel-slot">'
         + '<div class="voice-recorder-panel" style="display:none;">'
         + '<div class="voice-recorder-status">'
         + '<span class="voice-recorder-timer">00:00</span>'
@@ -69,6 +70,7 @@
         + '<i class="icon-remove"></i> ' + this.options.labelCancel + '</button>'
         + '</div>'
         + '<div class="voice-recorder-error" style="display:none;"></div>'
+        + '</div>'
         + '</div>';
 
       this.$element.append(html);
