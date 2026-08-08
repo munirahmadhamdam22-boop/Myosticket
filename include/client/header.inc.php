@@ -44,7 +44,7 @@ if (osTicket::is_ie())
         rel="stylesheet" media="screen" />
     <link rel="stylesheet" href="<?php echo ROOT_PATH ?>css/jquery-ui-timepicker-addon.css?a1114e5" media="all"/>
     <link rel="stylesheet" href="<?php echo ROOT_PATH; ?>css/thread.css?a1114e5" media="screen"/>
-    <link rel="stylesheet" href="<?php echo ROOT_PATH; ?>css/voice.message.css?a1114e11" media="screen"/>
+    <link rel="stylesheet" href="<?php echo ROOT_PATH; ?>css/voice.message.css?a1114e12" media="screen"/>
     <link rel="stylesheet" href="<?php echo ROOT_PATH; ?>css/redactor.css?a1114e5" media="screen"/>
     <link type="text/css" rel="stylesheet" href="<?php echo ROOT_PATH; ?>css/font-awesome.min.css?a1114e5"/>
     <link type="text/css" rel="stylesheet" href="<?php echo ROOT_PATH; ?>css/flags.css?a1114e5"/>
@@ -57,8 +57,8 @@ if (osTicket::is_ie())
     <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/jquery-ui-1.13.2.custom.min.js?a1114e5"></script>
     <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/jquery-ui-timepicker-addon.js?a1114e5"></script>
     <script src="<?php echo ROOT_PATH; ?>js/osticket.js?a1114e5"></script>
-    <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/filedrop.field.js?a1114e5"></script>
-    <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/voice.message.js?a1114e7"></script>
+    <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/filedrop.field.js?a1114e6"></script>
+    <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/voice.message.js?a1114e9"></script>
     <script src="<?php echo ROOT_PATH; ?>js/bootstrap-typeahead.js?a1114e5"></script>
     <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/redactor.min.js?a1114e5"></script>
     <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/redactor-plugins.js?a1114e5"></script>

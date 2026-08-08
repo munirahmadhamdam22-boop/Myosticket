@@ -95,13 +95,14 @@ if ($user && $cfg->isAvatarsEnabled())
     $atts = isset($thread_attachments) ? $thread_attachments[$entry->id] : $entry->attachments;
     if (isset($atts) && $atts) {
         require_once INCLUDE_DIR . 'class.voice.php';
+        $voice_attachments = array();
 ?>
     <div class="attachments"><?php
         foreach ($atts as $A) {
             if ($A->inline)
                 continue;
             if (VoiceMessage::isVoiceMessage($A->file)) {
-                echo VoiceMessage::getPlayerHtml($A->file, array('sender' => $name));
+                $voice_attachments[] = $A;
                 continue;
             }
             $size = '';
@@ -118,6 +119,13 @@ if ($user && $cfg->isAvatarsEnabled())
         </span>
 <?php   }
     echo '</div>';
+    if ($voice_attachments) { ?>
+    <div class="voice-message-attachments"><?php
+        foreach ($voice_attachments as $A)
+            echo VoiceMessage::getPlayerHtml($A->file, array('sender' => $name));
+    ?></div>
+<?php
+    }
     }
 ?>
     </div>

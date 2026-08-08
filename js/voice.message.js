@@ -23,6 +23,8 @@
     this.recordingSeconds = 0;
     this.fileId = null;
     this.isRecording = false;
+    this.isStarting = false;
+    this.isFinalizing = false;
     this.isPaused = false;
     this.isUploading = false;
 
@@ -66,8 +68,6 @@
         + '<i class="icon-stop"></i> ' + this.options.labelStop + '</button>'
         + '<button type="button" class="voice-recorder-delete" disabled>'
         + '<i class="icon-trash"></i> ' + this.options.labelDelete + '</button>'
-        + '<button type="button" class="voice-recorder-cancel">'
-        + '<i class="icon-remove"></i> ' + this.options.labelCancel + '</button>'
         + '</div>'
         + '<div class="voice-recorder-error" style="display:none;"></div>'
         + '</div>'
@@ -83,7 +83,6 @@
       this.$btnRecord = this.$element.find('.voice-recorder-btn');
       this.$btnStop = this.$element.find('.voice-recorder-stop');
       this.$btnDelete = this.$element.find('.voice-recorder-delete');
-      this.$btnCancel = this.$element.find('.voice-recorder-cancel');
       this.$error = this.$element.find('.voice-recorder-error');
     },
 
@@ -94,6 +93,14 @@
 
     bindEvents: function() {
       var that = this;
+      this.$form = this.$element.closest('form');
+      this.$form.on('submit.voicerecorder', function(e) {
+        if (that.isStarting || that.isRecording || that.isFinalizing || that.isUploading) {
+          e.preventDefault();
+          that.showError(that.options.labelErrorPending);
+          return false;
+        }
+      });
       this.$btnRecord.on('click.voicerecorder', function(e) {
         e.preventDefault();
         that.startRecording();
@@ -106,17 +113,14 @@
         e.preventDefault();
         that.deleteRecording();
       });
-      this.$btnCancel.on('click.voicerecorder', function(e) {
-        e.preventDefault();
-        that.cancelRecording();
-      });
     },
 
     startRecording: function() {
       var that = this;
       this.resetError();
 
-      if (this.isRecording) return;
+      if (this.isRecording || this.isStarting) return;
+      this.isStarting = true;
 
       navigator.mediaDevices.getUserMedia({ audio: true })
         .then(function(stream) {
@@ -133,6 +137,7 @@
           try {
             that.mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType: mimeType } : undefined);
           } catch (e) {
+            that.isStarting = false;
             that.showError(that.options.labelErrorInit);
             that.cleanup();
             return;
@@ -153,7 +158,9 @@
           };
 
           that.mediaRecorder.start();
+          that.isStarting = false;
           that.isRecording = true;
+          that.setSubmitDisabled(true);
           that.$element.closest('.message-composer').addClass('is-recording');
           that.$toolbar.hide();
           that.$panel.show();
@@ -162,6 +169,7 @@
           that.startTimer();
         })
         .catch(function(err) {
+          that.isStarting = false;
           if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
             that.showError(that.options.labelErrorPermission);
           } else if (err.name === 'NotFoundError') {
@@ -174,6 +182,7 @@
 
     stopRecording: function() {
       if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
+        this.isFinalizing = true;
         this.mediaRecorder.stop();
         this.isRecording = false;
         this.stopTimer();
@@ -184,6 +193,7 @@
 
     onRecordingComplete: function() {
       var that = this;
+      this.isFinalizing = false;
       var mimeType = 'audio/webm';
       if (this.mediaRecorder && this.mediaRecorder.mimeType) {
         mimeType = this.mediaRecorder.mimeType;
@@ -233,11 +243,6 @@
       this.triggerChange();
     },
 
-    cancelRecording: function() {
-      this.deleteRecording();
-      this.$panel.hide();
-    },
-
     upload: function(onSuccess, onError) {
       var that = this;
       if (!this.audioBlob || !this.options.uploadUrl) {
@@ -251,8 +256,8 @@
         return;
       }
 
-      var $submitBtn = this.$element.closest('form').find('input[type=submit]');
-      $submitBtn.prop('disabled', true);
+      var $submitBtn = this.$element.closest('form').find(':submit');
+      this.setSubmitDisabled(true);
       this.isUploading = true;
 
       var formData = new FormData();
@@ -302,14 +307,14 @@
           that.showError(that.options.labelErrorUpload);
           if (onError) onError();
         }
-        $submitBtn.prop('disabled', false);
+        that.setSubmitDisabled(false);
         that.isUploading = false;
       };
 
       xhr.onerror = function() {
         that.showError(that.options.labelErrorUpload);
         if (onError) onError();
-        $submitBtn.prop('disabled', false);
+        that.setSubmitDisabled(false);
         that.isUploading = false;
       };
 
@@ -369,6 +374,10 @@
       );
     },
 
+    setSubmitDisabled: function(disabled) {
+      this.$element.closest('form').find(':submit').prop('disabled', disabled);
+    },
+
     showError: function(msg) {
       this.$error.text(msg).show();
     },
@@ -384,11 +393,14 @@
     },
 
     cleanup: function() {
+      this.isStarting = false;
+      this.isFinalizing = false;
       this.isRecording = false;
       this.stopTimer();
       this.cleanupStream();
       this.$indicator.removeClass('recording');
       this.$btnStop.prop('disabled', true);
+      this.setSubmitDisabled(false);
     },
 
     cleanupStream: function() {
@@ -414,6 +426,7 @@
 
     destroy: function() {
       this.cleanup();
+      this.$element.closest('form').off('submit.voicerecorder');
       if (this.audioUrl) {
         URL.revokeObjectURL(this.audioUrl);
       }
@@ -450,13 +463,13 @@
     labelRecord: 'Record',
     labelStop: 'Stop',
     labelDelete: 'Delete',
-    labelCancel: 'Cancel',
     labelUnsupported: 'Your browser does not support voice recording.',
     labelErrorInit: 'Unable to initialize voice recording.',
     labelErrorRecord: 'An error occurred during recording.',
     labelErrorPermission: 'Microphone permission denied.',
     labelErrorNoMic: 'No microphone found.',
     labelErrorUpload: 'Failed to upload voice message.',
+    labelErrorPending: 'Please wait for the voice recording to finish uploading.',
     labelErrorDuration: 'Recording exceeds maximum duration.',
     labelErrorSize: 'Voice message exceeds maximum file size.'
   };

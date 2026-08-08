@@ -225,14 +225,14 @@
       if (filenode) this.cancelUpload(filenode);
     },
     afterAll: function() {
-      var submit = this.$element.closest('form').find('input[type=submit]'),
+      var submit = this.$element.closest('form').find(':submit'),
           $submit = $(submit);
       if ($submit.data('original')) {
         $submit.val($submit.data('original')).prop('disabled', false);
       }
     },
     lockSubmit: function() {
-      var submit = this.$element.closest('form').find('input[type=submit]'),
+      var submit = this.$element.closest('form').find(':submit'),
           $submit = $(submit);
       if (!$submit.data('original')) {
         $submit.data('original', $submit.val());

@@ -152,8 +152,7 @@
 }
 
 .message-composer .voice-recorder-stop,
-.message-composer .voice-recorder-delete,
-.message-composer .voice-recorder-cancel {
+.message-composer .voice-recorder-delete {
   padding: 5px 7px;
 }
 
@@ -251,8 +250,7 @@
 }
 
 .voice-recorder-stop,
-.voice-recorder-delete,
-.voice-recorder-cancel {
+.voice-recorder-delete {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -272,10 +270,6 @@
 .voice-recorder-delete:hover:not(:disabled) {
   background: #ffebee;
   border-color: #d32f2f;
-}
-
-.voice-recorder-cancel {
-  background: #f5f5f5;
 }
 
 .voice-recorder-error {
@@ -318,6 +312,19 @@
 }
 
 .thread-body .attachments .voice-message-player {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* Voice players are rendered outside the staff attachment strip so its
+ * relative positioning can never cover inline image attachments. */
+.thread-body .voice-message-attachments {
+  display: flow-root;
+  clear: both;
+  margin-top: 12px;
+}
+
+.thread-body .voice-message-attachments .voice-message-player {
   max-width: 100%;
   overflow-wrap: anywhere;
 }

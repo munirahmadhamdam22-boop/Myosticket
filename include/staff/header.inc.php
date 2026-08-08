@@ -34,7 +34,7 @@ if (osTicket::is_ie())
     <![endif]-->
     <script type="text/javascript" src="<?php echo ROOT_PATH; ?>js/jquery-3.7.0.min.js?a1114e5"></script>
     <link rel="stylesheet" href="<?php echo ROOT_PATH ?>css/thread.css?a1114e5" media="all"/>
-    <link rel="stylesheet" href="<?php echo ROOT_PATH ?>css/voice.message.css?a1114e11" media="all"/>
+    <link rel="stylesheet" href="<?php echo ROOT_PATH ?>css/voice.message.css?a1114e12" media="all"/>
     <link rel="stylesheet" href="<?php echo ROOT_PATH ?>scp/css/scp.css?a1114e5" media="all"/>
     <link rel="stylesheet" href="<?php echo ROOT_PATH; ?>css/redactor.css?a1114e5" media="screen"/>
     <link rel="stylesheet" href="<?php echo ROOT_PATH ?>css/typeahead.css?a1114e5" media="screen"/>
